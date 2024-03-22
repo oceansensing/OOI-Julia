@@ -1,9 +1,10 @@
 
 # DG 2024-03-22: Load data from OOI Coastal Pioneer Upper Inshore Profiler Mooring
 # 
-# Note: to run this script:
-# for python: erddapy, and netCDF4 must be installed, and PyCall must be setup to use the correct version of python
+# Note: The script gives an example of loading data from one of OOI's moorings. Please use OOI Data Explorer to find other datasets.
+#
 # for Julia: NCDatasets, HTTP, DataFrames, PyCall, Dates, Missings must be installed
+# for python: erddapy, and netCDF4 must be installed, and PyCall must be setup to use the correct version of python
 
 using NCDatasets, HTTP, DataFrames, PyCall, Dates, Missings
 
