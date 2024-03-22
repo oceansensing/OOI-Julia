@@ -1,2 +1,2 @@
 # OOI-Julia
-some code for loading OOI in Julia
+some code for loading OOI data in Julia
