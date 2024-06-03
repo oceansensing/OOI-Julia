@@ -88,3 +88,7 @@ backscatter = missing2nan(ds["backscatter"]);
 CDOM = missing2nan(ds["CDOM"]);
 chlorophyll = missing2nan(ds["chlorophyll"]);
 PAR = missing2nan(ds["PAR"]);
+
+sf2d = ds["source_file"][1:end,:];
+source_file_raw = [string(sf2d[:,i]...) for i in 1:size(sf2d,2)]
+source_file = [replace(source_file_raw[i], r"[\0]" => "") for i in 1:length(source_file_raw)];
