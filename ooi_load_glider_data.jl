@@ -21,10 +21,10 @@ function ooi_load_glider_data(dataset_id, datadir)
 
     e = ERDDAP(server=server, protocol="tabledap"); 
     e.response = "nc"
-    e.dataset_id = "cp_387-20240405T1751"; 
+    e.dataset_id = dataset_id; 
 
     #data_url = "https://gliders.ioos.us/erddap/tabledap/cp_387-20240405T1751.nc?longitude,latitude,profile_id&time%3E=2024-05-10T00%3A00%3A00Z&time%3C=2024-05-17T00%3A00%3A00Z&.draw=markers&.marker=5%7C5&.color=0x000000&.colorBar=%7C%7C%7C%7C%7C&.bgColor=0xffccccff";
-    datadir = "/Users/gong/oceansensing Dropbox/C2PO/Data/OOI/";
+    #datadir = "/Users/gong/oceansensing Dropbox/C2PO/Data/OOI/";
 
     variables_glider = [
         "trajectory",
