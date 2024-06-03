@@ -7,9 +7,11 @@
 # for python: erddapy, and netCDF4 must be installed, and PyCall must be setup to use the correct version of python
 
 include("ooi_func.jl");
+include("ooi_types.jl");
 
 using NCDatasets, HTTP, DataFrames, PyCall, Dates, Missings
 using .ooi_func: missing2nan, cat_col_string
+import .ooi_types: Glider
 
 # Load the ERDDAP python package to access the OOI data
 ERDDAP = pyimport("erddapy").ERDDAP
@@ -89,6 +91,8 @@ CDOM = missing2nan(ds["CDOM"]);
 chlorophyll = missing2nan(ds["chlorophyll"]);
 PAR = missing2nan(ds["PAR"]);
 source_file = cat_col_string(ds["source_file"][:,:]);
-
 #source_file_raw = [string(sf2d[:,i]...) for i in 1:size(sf2d,2)];
 #source_file = [replace(source_file_raw[i], r"[\0]" => "") for i in 1:length(source_file_raw)];
+
+glider = ooi_types.Glider(trajectory, wmo_id, profile_id, time, lat, lon, pres, z, backscatter, CDOM, chlorophyll, PAR, dOsat, temp, cond, salt, rho, source_file);
+
