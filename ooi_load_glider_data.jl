@@ -9,7 +9,7 @@
 include("ooi_func.jl");
 
 using NCDatasets, HTTP, DataFrames, PyCall, Dates, Missings
-using .ooi_func: missing2nan
+using .ooi_func: missing2nan, cat_col_string
 
 # Load the ERDDAP python package to access the OOI data
 ERDDAP = pyimport("erddapy").ERDDAP
@@ -88,7 +88,7 @@ backscatter = missing2nan(ds["backscatter"]);
 CDOM = missing2nan(ds["CDOM"]);
 chlorophyll = missing2nan(ds["chlorophyll"]);
 PAR = missing2nan(ds["PAR"]);
+source_file = cat_col_string(ds["source_file"][:,:]);
 
-sf2d = ds["source_file"][1:end,:];
-source_file_raw = [string(sf2d[:,i]...) for i in 1:size(sf2d,2)]
-source_file = [replace(source_file_raw[i], r"[\0]" => "") for i in 1:length(source_file_raw)];
+#source_file_raw = [string(sf2d[:,i]...) for i in 1:size(sf2d,2)];
+#source_file = [replace(source_file_raw[i], r"[\0]" => "") for i in 1:length(source_file_raw)];

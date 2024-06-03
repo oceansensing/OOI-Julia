@@ -28,4 +28,10 @@ function missing2nan(varin)
     return varout
 end
 
+function cat_col_string(arr::Array{Char, 2})
+    var_raw = [string(arr[:,i]...) for i in 1:size(arr,2)];
+    var = [replace(var_raw[i], r"[\0]" => "") for i in 1:length(var_raw)];
+    return var;
+end
+
 end
