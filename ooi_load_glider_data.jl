@@ -6,41 +6,18 @@
 # for Julia: NCDatasets, HTTP, DataFrames, PyCall, Dates, Missings must be installed
 # for python: erddapy, and netCDF4 must be installed, and PyCall must be setup to use the correct version of python
 
+include("ooi_func.jl");
+
 using NCDatasets, HTTP, DataFrames, PyCall, Dates, Missings
-
-# Define a function to convert Missing to NaN in Julia
-function missing2nan(varin)
-    varin = collect(varin);
-    if (typeof(varin) == Vector{Union{Missing, Int64}}) | (typeof(varin) == Matrix{Union{Missing, Int64}})
-        varout = Array{Float64}(undef,size(collect(varin)));
-        varintypes = typeof.(varin);
-        notmissind = findall(varintypes .!= Missing);
-        missind = findall(varintypes .== Missing); 
-        if isempty(notmissind) != true  
-            varout[notmissind] .= Float64.(varin[notmissind]);
-        end
-        if isempty(missind) != true
-            varout[missind] .= NaN;
-        end
-    elseif (typeof(varin) == Vector{Union{Missing, Float64}}) | (typeof(varin) == Matrix{Union{Missing, Float64}})
-        varout = Float64.(collect(Missings.replace(varin, NaN)));
-    elseif (typeof(varin) == Vector{Missing}) | (typeof(varin) == Matrix{Missing})
-        varout = Array{Float64}(undef,size(collect(varin)));
-        varout .= NaN; 
-    else
-        varout = varin;
-    end
-
-    return varout
-end
+using .ooi_func: missing2nan
 
 # Load the ERDDAP python package to access the OOI data
 ERDDAP = pyimport("erddapy").ERDDAP
 
 #server = "http://erddap.dataexplorer.oceanobservatories.org/erddap"; # mooring data server
 server = "https://gliders.ioos.us/erddap" # glider data server
-e = ERDDAP(server=server, protocol="tabledap"); 
 
+e = ERDDAP(server=server, protocol="tabledap"); 
 e.response = "nc"
 e.dataset_id = "cp_387-20240405T1751"; 
 
@@ -111,11 +88,3 @@ backscatter = missing2nan(ds["backscatter"]);
 CDOM = missing2nan(ds["CDOM"]);
 chlorophyll = missing2nan(ds["chlorophyll"]);
 PAR = missing2nan(ds["PAR"]);
-
-
-#station = ds["station"][:];
-#z = missing2nan(ds["z"][:,:]);
-#u = missing2nan(ds["eastward_sea_water_velocity"][:,:]);
-#v = missing2nan(ds["northward_sea_water_velocity"][:,:]);
-#w = missing2nan(ds["upward_sea_water_velocity"][:,:]);
-#uverr = missing2nan(ds["velprof_evl"][:,:]);
