@@ -13,7 +13,7 @@ using NCDatasets, HTTP, DataFrames, PyCall, Dates, Missings
 using .ooi_func: missing2nan, cat_col_string
 import .ooi_types: MooringCTD
 
-function ooi_load_mooring_data(dataset_id, datadir)
+function ooi_load_mooring_data(dataset_id, datadir; st0 = "2024-04-01T00:00:00Z", stN = "2024-06-01T00:00:00Z")
     # Load the ERDDAP python package to access the OOI data
     ERDDAP = pyimport("erddapy").ERDDAP
 
@@ -59,8 +59,10 @@ function ooi_load_mooring_data(dataset_id, datadir)
     e.variables = variables_ctd;
 
     e.constraints = Dict(
-        "time>=" => "2024-04-03T00:00:00Z",
-        "time<=" => "2024-05-15T04:00:00Z",
+#        "time>=" => "2024-04-03T00:00:00Z",
+#        "time<=" => "2024-05-15T04:00:00Z",
+        "time>=" => st0,
+        "time<=" => stN,
         "z>=" => -100.0,
         "z<=" => 0.0
     );
