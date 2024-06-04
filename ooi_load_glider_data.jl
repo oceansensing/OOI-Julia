@@ -104,6 +104,6 @@ function ooi_load_glider_data(dataset_id, datadir; st0 = "2024-04-01T00:00:00Z",
     PAR = missing2nan(ds["PAR"]);
     source_file = cat_col_string(ds["source_file"][:,:]);
 
-    glider = Glider(trajectory, wmo_id, profile_id, time, lat, lon, pres, z, backscatter, CDOM, chlorophyll, PAR, dOsat, temp, cond, salt, rho, source_file);
+    glider = Glider(trajectory, wmo_id, profile_id, time, lat, lon, pres, z, backscatter, CDOM, chlorophyll, PAR, dO, dOsat, temp, cond, salt, rho, source_file);
     return glider;
 end

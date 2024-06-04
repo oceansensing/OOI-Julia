@@ -16,6 +16,7 @@ mutable struct Glider
     CDOM::Array{Float64}
     chlorophyll::Array{Float64}
     PAR::Array{Float64}
+    dO::Array{Float64}
     dOsatn::Array{Float64}
     temp::Array{Float64}
     cond::Array{Float64}
