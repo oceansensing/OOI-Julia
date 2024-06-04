@@ -102,6 +102,6 @@ function ooi_load_glider_data(dataset_id, datadir)
     #source_file_raw = [string(sf2d[:,i]...) for i in 1:size(sf2d,2)];
     #source_file = [replace(source_file_raw[i], r"[\0]" => "") for i in 1:length(source_file_raw)];
 
-    glider = ooi_types.Glider(trajectory, wmo_id, profile_id, time, lat, lon, pres, z, backscatter, CDOM, chlorophyll, PAR, dOsat, temp, cond, salt, rho, source_file);
+    glider = Glider(trajectory, wmo_id, profile_id, time, lat, lon, pres, z, backscatter, CDOM, chlorophyll, PAR, dOsat, temp, cond, salt, rho, source_file);
     return glider;
 end

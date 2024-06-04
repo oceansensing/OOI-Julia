@@ -24,4 +24,15 @@ mutable struct Glider
     source_file::Array{String}
 end
 
+mutable struct MooringCTD
+    station::String
+    time::Array{DateTime}
+    lat::Array{Float64}
+    lon::Array{Float64}
+    z::Array{Float64}
+    temp::Array{Float64}
+    salt::Array{Float64}
+    rho::Array{Float64}
+end
+
 end
