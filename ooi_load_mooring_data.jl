@@ -21,8 +21,10 @@ function ooi_load_mooring_data(dataset_id, datadir)
     #datadir = "/Users/gong/oceansensing Dropbox/C2PO/Data/OOI/";
 
     server = "http://erddap.dataexplorer.oceanobservatories.org/erddap";
-    e = ERDDAP(server=server, protocol="tabledap"); 
 
+    redownloadflag = 0;
+
+    e = ERDDAP(server=server, protocol="tabledap"); 
     e.response = "ncCFMA"
     e.dataset_id = dataset_id;
     #e.dataset_id = "ooi-cp02pmui-rii01-02-adcptg010";
