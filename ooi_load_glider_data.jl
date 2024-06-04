@@ -19,6 +19,8 @@ function ooi_load_glider_data(dataset_id, datadir)
     #server = "http://erddap.dataexplorer.oceanobservatories.org/erddap"; # mooring data server
     server = "https://gliders.ioos.us/erddap" # glider data server
 
+    redownloadflag = 0;
+
     e = ERDDAP(server=server, protocol="tabledap"); 
     e.response = "nc"
     e.dataset_id = dataset_id; 
@@ -64,10 +66,16 @@ function ooi_load_glider_data(dataset_id, datadir)
         "depth<=" => 2000.0,
     );
 
-    # download the data from ERDDAP server in netCDF format
+    # download the data from glider DAC server in netCDF format if it doesn't exist already
     dataurl = e.get_download_url();
     datalocalpath = joinpath(datadir, e.dataset_id * ".nc"); 
-    HTTP.download(dataurl, datalocalpath, verbose=true);
+
+    if isfile(datalocalpath) && redownloadflag == 0
+        println("File already exists: ", datalocalpath);
+    else
+        HTTP.download(dataurl, datalocalpath, verbose=true);
+        println("Downloaded data from ", dataurl, " to ", datalocalpath);
+    end
 
     # load the data from the netCDF file using NCDatasets library
     ds = NCDatasets.NCDataset(datalocalpath);
