@@ -1,5 +1,5 @@
-
 # DG 2024-03-22: Load data from OOI Coastal Pioneer Upper Inshore Profiler Mooring
+# DG 2024-06-04: refactored code to use function calls and data types
 # 
 # Note: The script gives an example of loading data from one of OOI's moorings. Please use OOI Data Explorer to find other datasets.
 #
@@ -14,12 +14,6 @@ using .ooi_func: missing2nan, cat_col_string
 import .ooi_types: MooringCTD
 
 function ooi_load_mooring_data(dataset_id, datadir)
-    # DG 2024-03-22: Load data from OOI Coastal Pioneer Upper Inshore Profiler Mooring
-    # 
-    # Note: The script gives an example of loading data from one of OOI's moorings. Please use OOI Data Explorer to find other datasets.
-    #
-    # for Julia: NCDatasets, HTTP, DataFrames, PyCall, Dates, Missings must be installed
-    # for python: erddapy, and netCDF4 must be installed, and PyCall must be setup to use the correct version of python
     # Load the ERDDAP python package to access the OOI data
     ERDDAP = pyimport("erddapy").ERDDAP
 

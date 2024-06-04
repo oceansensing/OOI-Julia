@@ -1,3 +1,11 @@
+# DG 2024-03-22: Load data from OOI Coastal Pioneer Upper Inshore Profiler Mooring
+# DG 2024-06-03: refactored code to use function calls and data types
+# 
+# Note: The script gives an example of loading data from one of OOI's moorings. Please use OOI Data Explorer to find other datasets.
+#
+# for Julia: NCDatasets, HTTP, DataFrames, PyCall, Dates, Missings must be installed
+# for python: erddapy, and netCDF4 must be installed, and PyCall must be setup to use the correct version of python
+
 include("ooi_func.jl");
 include("ooi_types.jl");
 
@@ -6,12 +14,6 @@ using .ooi_func: missing2nan, cat_col_string
 import .ooi_types: Glider
 
 function ooi_load_glider_data(dataset_id, datadir)
-    # DG 2024-03-22: Load data from OOI Coastal Pioneer Upper Inshore Profiler Mooring
-    # 
-    # Note: The script gives an example of loading data from one of OOI's moorings. Please use OOI Data Explorer to find other datasets.
-    #
-    # for Julia: NCDatasets, HTTP, DataFrames, PyCall, Dates, Missings must be installed
-    # for python: erddapy, and netCDF4 must be installed, and PyCall must be setup to use the correct version of python
 
     # Load the ERDDAP python package to access the OOI data
     ERDDAP = pyimport("erddapy").ERDDAP
@@ -99,8 +101,6 @@ function ooi_load_glider_data(dataset_id, datadir)
     chlorophyll = missing2nan(ds["chlorophyll"]);
     PAR = missing2nan(ds["PAR"]);
     source_file = cat_col_string(ds["source_file"][:,:]);
-    #source_file_raw = [string(sf2d[:,i]...) for i in 1:size(sf2d,2)];
-    #source_file = [replace(source_file_raw[i], r"[\0]" => "") for i in 1:length(source_file_raw)];
 
     glider = Glider(trajectory, wmo_id, profile_id, time, lat, lon, pres, z, backscatter, CDOM, chlorophyll, PAR, dOsat, temp, cond, salt, rho, source_file);
     return glider;
